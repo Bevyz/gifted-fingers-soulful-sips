@@ -184,6 +184,166 @@ footer a{color:var(--clay-light);text-decoration:none}
   .massage-section,.drinks-section,.booking-section{padding:3rem 1.2rem}
   .page-hero{padding:7rem 1.4rem 3rem}
 }
+
+/* ═══════════════════════════════════════════════
+   BOLD HOVER / TOUCH EFFECTS — Cards & Interactive
+   ═══════════════════════════════════════════════ */
+
+/* Ripple effect on touch/click */
+.ripple-host { position: relative; overflow: hidden; }
+.ripple {
+  position: absolute; border-radius: 50%;
+  transform: scale(0); animation: ripple-anim 0.6s linear;
+  background: rgba(196,149,106,0.28); pointer-events: none;
+}
+@keyframes ripple-anim {
+  to { transform: scale(4); opacity: 0; }
+}
+
+/* ── Dual brand cards ── */
+.dual-card {
+  transition: background .3s, transform .35s cubic-bezier(.22,1,.36,1), box-shadow .35s;
+  will-change: transform;
+}
+.dual-card:hover, .dual-card:active {
+  transform: translateY(-8px) scale(1.012);
+  box-shadow: 0 24px 60px rgba(58,46,38,.14), 0 0 0 1.5px var(--clay-light);
+  background: var(--sage-pale) !important;
+  z-index: 2;
+}
+.dual-card:hover .dual-card-logo {
+  transform: scale(1.1) rotate(-3deg);
+  box-shadow: 0 8px 24px rgba(196,149,106,.3);
+  border-color: var(--clay);
+}
+.dual-card-logo {
+  transition: transform .4s cubic-bezier(.22,1,.36,1), box-shadow .4s, border-color .3s;
+}
+.dual-card:hover h3 {
+  color: var(--clay);
+}
+.dual-card h3 { transition: color .3s; }
+.dual-card:hover .dual-card-link {
+  letter-spacing: .24em;
+  color: var(--espresso);
+}
+.dual-card-link { transition: letter-spacing .3s, color .3s; }
+
+/* ── Service cards (massage page) ── */
+.service-card {
+  transition: transform .38s cubic-bezier(.22,1,.36,1), box-shadow .38s, border-color .3s;
+  will-change: transform;
+  border: 1px solid var(--divider);
+}
+.service-card:hover, .service-card:active {
+  transform: translateY(-10px) scale(1.018);
+  box-shadow:
+    0 20px 50px rgba(58,46,38,.13),
+    0 0 0 1.5px var(--clay),
+    0 0 30px rgba(196,149,106,.12);
+  border-color: var(--clay);
+}
+.service-card:hover .service-placeholder {
+  transform: scale(1.15);
+  filter: drop-shadow(0 4px 12px rgba(196,149,106,.4));
+}
+.service-placeholder {
+  transition: transform .4s cubic-bezier(.22,1,.36,1), filter .4s;
+}
+.service-card:hover h4 {
+  color: var(--clay);
+}
+.service-card h4 { transition: color .3s; }
+.service-card:hover .service-duration {
+  background: var(--clay);
+  color: var(--cream);
+}
+.service-duration { transition: background .3s, color .3s; }
+
+/* ── Drink cards (drinks page) ── */
+.drink-card {
+  transition: transform .38s cubic-bezier(.22,1,.36,1), box-shadow .38s, border-color .3s;
+  will-change: transform;
+}
+.drink-card:hover, .drink-card:active {
+  transform: translateY(-10px) scale(1.018);
+  box-shadow:
+    0 20px 50px rgba(58,46,38,.13),
+    0 0 0 1.5px var(--clay),
+    0 0 30px rgba(196,149,106,.12);
+  border-color: var(--clay);
+}
+.drink-card:hover .drink-card-img {
+  transform: scale(1.06);
+}
+.drink-card-img {
+  transition: transform .5s cubic-bezier(.22,1,.36,1);
+}
+.drink-card:hover h4 { color: var(--clay); }
+.drink-card h4 { transition: color .3s; }
+.drink-card:hover .drink-tag {
+  background: var(--clay);
+  color: var(--cream);
+  letter-spacing: .2em;
+}
+.drink-tag { transition: background .3s, color .3s, letter-spacing .3s; }
+
+/* ── Nav links ── */
+.nav-links a {
+  transition: color .2s, letter-spacing .25s;
+}
+.nav-links a:hover {
+  letter-spacing: .2em;
+}
+
+/* ── Buttons ── */
+.btn-primary, .btn-outline, .wa-btn, .nav-cta {
+  position: relative; overflow: hidden;
+}
+.btn-primary::before, .btn-outline::before, .wa-btn::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(120deg, transparent 0%, rgba(255,255,255,.18) 50%, transparent 100%);
+  transform: translateX(-100%);
+  transition: transform .5s ease;
+}
+.btn-primary:hover::before, .btn-outline:hover::before, .wa-btn:hover::before {
+  transform: translateX(100%);
+}
+
+/* ── Booking card ── */
+.booking-card {
+  transition: box-shadow .4s;
+}
+.booking-card:hover {
+  box-shadow: 0 16px 48px rgba(58,46,38,.1), 0 0 0 1px var(--clay-light);
+}
+
+/* ── Hero image grid ── */
+.hero-img {
+  transition: transform .4s;
+}
+.hero-img:hover {
+  z-index: 2;
+}
+.hero-img:hover img {
+  transform: scale(1.07);
+  filter: brightness(1.04);
+}
+.hero-img img {
+  transition: transform .55s cubic-bezier(.22,1,.36,1), filter .55s;
+}
+
+/* ── Touch feedback for mobile (active states) ── */
+@media (hover: none) {
+  .dual-card:active {
+    transform: scale(0.975);
+    box-shadow: 0 4px 20px rgba(58,46,38,.12);
+  }
+  .service-card:active, .drink-card:active {
+    transform: scale(0.97);
+  }
+}
 </style>
 </head>
 <body>
@@ -601,6 +761,35 @@ function sendToWhatsApp(){
   const msg=`Hello Gifted Fingers & Soulful Sips! 🌿\n\nI'd like to make a booking:\n\n👤 Name: ${name}\n📞 Phone: ${phone}\n💆 Service: ${service}\n📅 Date: ${date}\n⏰ Time: ${time}\n📍 Location: ${location}\n📝 Notes: ${notes}\n\nPlease confirm my booking. Thank you!`;
   window.open(`https://wa.me/2348141225168?text=${encodeURIComponent(msg)}`,'_blank');
 }
+</script>
+
+<script>
+/* ── Ripple on all cards ── */
+document.addEventListener('DOMContentLoaded', () => {
+  const rippleTargets = '.dual-card, .service-card, .drink-card, .btn-primary, .btn-outline, .wa-btn';
+
+  document.body.addEventListener('pointerdown', (e) => {
+    const card = e.target.closest(rippleTargets);
+    if (!card) return;
+
+    // Add ripple-host if not present
+    if (!card.classList.contains('ripple-host')) {
+      card.classList.add('ripple-host');
+    }
+
+    const ripple = document.createElement('span');
+    ripple.classList.add('ripple');
+
+    const rect = card.getBoundingClientRect();
+    const size = Math.max(rect.width, rect.height) * 1.4;
+    ripple.style.width = ripple.style.height = size + 'px';
+    ripple.style.left = (e.clientX - rect.left - size / 2) + 'px';
+    ripple.style.top  = (e.clientY - rect.top  - size / 2) + 'px';
+
+    card.appendChild(ripple);
+    ripple.addEventListener('animationend', () => ripple.remove());
+  });
+});
 </script>
 </body>
 </html>
