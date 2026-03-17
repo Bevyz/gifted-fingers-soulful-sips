@@ -48,7 +48,7 @@ section.active{display:block}
 
 /* ─── HOME ─────────────────────────────── */
 .hero{min-height:100vh;display:grid;grid-template-columns:1fr 1fr;overflow:hidden;padding-top:72px}
-.hero-left{display:flex;flex-direction:column;justify-content:center;padding:2.5rem 4rem 2.5rem 5rem;background:var(--cream);position:relative}
+.hero-left{display:flex;flex-direction:column;justify-content:flex-start;padding:3rem 4rem 2rem 5rem;padding-top:calc(72px + 2.5rem);background:var(--cream);position:relative}
 .hero-left::after{content:'';position:absolute;right:-1px;top:10%;bottom:10%;width:1px;background:var(--divider)}
 .hero-eyebrow{font-size:.7rem;letter-spacing:.3em;text-transform:uppercase;color:var(--clay);margin-bottom:1.2rem;animation:fadeUp .8s ease both}
 .hero-title{font-family:'Cormorant Garamond',serif;font-size:clamp(2.8rem,4.5vw,5rem);font-weight:300;line-height:1.05;color:var(--espresso);animation:fadeUp .8s .1s ease both}
@@ -432,6 +432,28 @@ footer a{color:var(--clay-light);text-decoration:none}
   .hamburger { display: flex; }
   .nav-links  { display: none !important; }
 }
+
+/* Mobile brand name — stacked layout */
+@media (max-width: 768px) {
+  .brand-top { display: none !important; }
+  .brand-mobile {
+    display: flex !important;
+    flex-direction: column;
+    align-items: flex-start;
+    line-height: 1.2;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--espresso);
+    letter-spacing: .01em;
+  }
+  .brand-mobile .bm-top  { display: block; }
+  .brand-mobile .bm-amp  { display: block; padding-left: 1.1rem; color: var(--clay); font-style: italic; }
+  .brand-mobile .bm-bot  { display: block; text-align: right; }
+}
+@media (min-width: 769px) {
+  .brand-mobile { display: none !important; }
+}
 </style>
 </head>
 <body>
@@ -445,6 +467,11 @@ footer a{color:var(--clay-light);text-decoration:none}
     </div>
     <div class="brand-text">
       <span class="brand-top">Gifted Fingers &amp; Soulful Sips</span>
+      <span class="brand-mobile">
+        <span class="bm-top">Gifted Fingers</span>
+        <span class="bm-amp">&amp;</span>
+        <span class="bm-bot">Soulful Sips</span>
+      </span>
       
     </div>
   </a>
