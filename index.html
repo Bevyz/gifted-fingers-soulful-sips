@@ -354,19 +354,29 @@
     /* DUAL CARDS */
     .dual-intro {
       display: grid;
-      grid-template-columns: 1fr;
-      gap: 1px;
-      background: var(--divider);
-      border-top: 1px solid var(--divider)
+      grid-template-columns: 1fr 1fr;
+      gap: 3vw;
+      width: 100%;
+      max-width: none;
+      margin: 0 auto;
+      padding: 5rem 2.5rem;
+      box-sizing: border-box;
     }
 
     .dual-card {
       background: var(--warm-white);
-      padding: 3.5rem 3rem;
+      padding: 4rem 3rem;
       cursor: pointer;
       transition: background .3s;
       position: relative;
-      overflow: hidden
+      overflow: hidden;
+      border-radius: 16px;
+      box-shadow: 0 10px 30px rgba(58, 46, 38, .05);
+      width: 100%;
+      min-height: 55vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
     }
 
     .dual-card:hover {
@@ -413,29 +423,89 @@
     }
 
     /* TESTIMONIAL */
-    .testimonial-strip {
+    .testimonial-section {
       background: var(--sage-pale);
-      padding: 4rem 3rem;
-      text-align: center;
-      border-top: 1px solid var(--divider)
+      padding: 6rem 2rem;
+      overflow: hidden;
     }
 
-    .testimonial-strip blockquote {
+    .testimonial-stack {
+      position: relative;
+      width: 100%;
+      max-width: 550px;
+      height: 380px;
+      margin: 0 auto;
+      perspective: 1000px;
+    }
+
+    .test-card {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background: var(--cream);
+      padding: 3.5rem 2.5rem;
+      border-radius: 16px;
+      box-shadow: 0 16px 40px rgba(58, 46, 38, .08);
+      transition: all 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+      opacity: 0;
+      pointer-events: none;
+      z-index: 1;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      min-height: 100%;
+      user-select: none;
+    }
+
+    /* Active Card - Front */
+    .test-card.active {
+      opacity: 1;
+      transform: translate(0, 0) scale(1);
+      z-index: 3;
+      pointer-events: auto;
+      cursor: grab;
+    }
+    .test-card.active:active {
+      cursor: grabbing;
+    }
+
+    /* Next Card - Peeking top right */
+    .test-card.next {
+      opacity: 0.9;
+      transform: translate(3.5rem, -2rem) scale(0.92);
+      z-index: 2;
+      pointer-events: auto;
+      cursor: pointer;
+    }
+    .test-card.next:hover {
+      transform: translate(4.5rem, -2.5rem) scale(0.92);
+    }
+
+    /* Back Card - Hidden */
+    .test-card.back {
+      opacity: 0;
+      transform: translate(6rem, -4rem) scale(0.85);
+      z-index: 1;
+    }
+
+    .test-card blockquote {
       font-family: 'Cormorant Garamond', serif;
       font-size: 1.55rem;
-      font-weight: 300;
+      font-weight: 400;
       font-style: italic;
       color: var(--espresso);
-      max-width: 640px;
-      margin: 0 auto 1rem;
-      line-height: 1.5
+      margin: 0 auto 1.5rem;
+      line-height: 1.5;
     }
 
-    .testimonial-strip cite {
+    .test-card cite {
       font-size: .72rem;
       letter-spacing: .18em;
       text-transform: uppercase;
-      color: var(--muted)
+      color: var(--muted);
+      font-style: normal;
     }
 
     /* PAGE HERO */
@@ -996,7 +1066,12 @@
       }
     }
 
+    
     @media(max-width:640px) {
+      .testimonial-stack { height: 420px; }
+      .test-card.next { transform: translate(1.5rem, -1.5rem) scale(0.95); }
+      .test-card.next:hover { transform: translate(1.5rem, -1.5rem) scale(0.95); }
+
       nav {
         padding: .9rem 1.2rem
       }
@@ -1590,10 +1665,22 @@
     </div>
 
     <!-- Testimonial -->
-    <div class="testimonial-strip">
-      <blockquote>"The most relaxing experience — she came right to my home. The Phoenix Blend juice afterwards was the
-        perfect finish."</blockquote>
-      <cite>— Adaeze O., Victoria Island, Lagos</cite>
+    <div class="testimonial-section">
+      <h2 style="text-align: center; font-family: 'Cormorant Garamond', serif; font-size: 2.2rem; font-weight: 400; color: var(--espresso); margin-bottom: 2rem;">Client Reviews</h2>
+      <div class="testimonial-stack" id="testimonialStack">
+        <div class="test-card active">
+          <blockquote>"The most relaxing experience — she came right to my home. The Phoenix Blend juice afterwards was the perfect finish."</blockquote>
+          <cite>— Adaeze O., Victoria Island, Lagos</cite>
+        </div>
+        <div class="test-card next">
+          <blockquote>"Absolutely incredible! The deep tissue massage worked out all my knots, and the Serotonin Sips drink tasted like heaven."</blockquote>
+          <cite>— Michael T., Lekki Phase 1</cite>
+        </div>
+        <div class="test-card back">
+          <blockquote>"I booked them for a corporate wellness day. Our entire team felt rejuvenated. Highly recommended!"</blockquote>
+          <cite>— Sarah J., Ikoyi</cite>
+        </div>
+      </div>
     </div>
 
     <footer>
@@ -2038,7 +2125,67 @@
       const msg = `Hello Gifted Fingers & Soulful Sips! 🌿\n\nI'd like to make a booking:\n\n👤 Name: ${name}\n📞 Phone: ${phone}\n💆 Service: ${service}\n📅 Date: ${date}\n⏰ Time: ${time}\n📍 Location: ${location}\n📝 Notes: ${notes}\n\nPlease confirm my booking. Thank you!`;
       window.open(`https://wa.me/2348141225168?text=${encodeURIComponent(msg)}`, '_blank');
     }
-  </script>
+  // Testimonial Stack Logic
+      const stackContainer = document.getElementById('testimonialStack');
+      if (stackContainer) {
+        const cards = Array.from(stackContainer.querySelectorAll('.test-card'));
+        let currentIndex = 0;
+
+        function updateStack() {
+          cards.forEach((card, i) => {
+            card.classList.remove('active', 'next', 'back');
+            if (i === currentIndex) {
+              card.classList.add('active');
+            } else if (i === (currentIndex + 1) % cards.length) {
+              card.classList.add('next');
+            } else {
+              card.classList.add('back');
+            }
+          });
+        }
+
+        stackContainer.addEventListener('click', (e) => {
+          if (e.target.closest('.test-card.next')) {
+            currentIndex = (currentIndex + 1) % cards.length;
+            updateStack();
+          }
+        });
+
+        let touchStartX = 0;
+        let touchEndX = 0;
+        
+        stackContainer.addEventListener('touchstart', e => {
+          touchStartX = e.changedTouches[0].screenX;
+        });
+
+        stackContainer.addEventListener('touchend', e => {
+          touchEndX = e.changedTouches[0].screenX;
+          if (Math.abs(touchStartX - touchEndX) > 40) {
+            currentIndex = (currentIndex + 1) % cards.length;
+            updateStack();
+          }
+        });
+        
+        let isDown = false;
+        let startX = 0;
+        
+        stackContainer.addEventListener('mousedown', e => {
+          if (!e.target.closest('.test-card.active')) return;
+          isDown = true;
+          startX = e.pageX;
+        });
+        
+        window.addEventListener('mouseup', e => {
+          if (!isDown) return;
+          isDown = false;
+          let endX = e.pageX;
+          if (Math.abs(startX - endX) > 40) {
+            currentIndex = (currentIndex + 1) % cards.length;
+            updateStack();
+          }
+        });
+      }
+    </script>
 
   <script>
     /* ── Ripple on all cards ── */
