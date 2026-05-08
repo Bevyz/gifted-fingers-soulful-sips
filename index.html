@@ -1243,6 +1243,82 @@
 
     
     @media(max-width:640px) {
+      footer {
+        padding: 1.4rem 1rem
+      }
+
+      .footer-inner {
+        align-items: center;
+        gap: .85rem;
+        text-align: center
+      }
+
+      .footer-identity {
+        width: 100%;
+        display: grid;
+        grid-template-columns: 34px minmax(0, max-content) 34px;
+        align-items: center;
+        justify-content: center;
+        gap: .6rem
+      }
+
+      .footer-logos {
+        display: contents
+      }
+
+      .footer-logos img:first-child {
+        grid-column: 1
+      }
+
+      .footer-logos img:last-child {
+        grid-column: 3
+      }
+
+      .footer-brand {
+        grid-column: 2;
+        grid-row: 1;
+        font-size: clamp(1rem, 5vw, 1.35rem);
+        white-space: nowrap
+      }
+
+      .footer-contact {
+        width: 100%;
+        display: grid;
+        grid-template-columns: repeat(3, max-content);
+        justify-content: center;
+        gap: .65rem .7rem;
+        overflow-x: auto;
+        scrollbar-width: none
+      }
+
+      .footer-contact::-webkit-scrollbar {
+        display: none
+      }
+
+      .footer-contact-title {
+        grid-column: 1 / -1;
+        justify-self: center;
+        font-size: .7rem;
+        letter-spacing: .24em
+      }
+
+      .footer-contact-link {
+        white-space: nowrap;
+        font-size: clamp(.56rem, 2.45vw, .72rem);
+        gap: .25rem
+      }
+
+      .footer-contact-icon {
+        width: 1.05rem;
+        height: 1.05rem
+      }
+
+      .footer-contact-icon.whatsapp::before,
+      .footer-contact-icon.instagram::before {
+        width: .68rem;
+        height: .68rem
+      }
+
       .hero-title {
         font-size: clamp(2.5rem, 15vw, 3.6rem)
       }
