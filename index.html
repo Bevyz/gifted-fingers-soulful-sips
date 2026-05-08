@@ -1468,6 +1468,34 @@
     .drinks-card:hover {
       background: linear-gradient(to right, var(--sage-pale) 50%, transparent 100%), url('Assets/Souldful sip card.jpg') right center / cover no-repeat;
     }
+
+    .service-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 0.5rem;
+    }
+    .selected-tag {
+      background: var(--sage-pale);
+      color: var(--espresso);
+      padding: 0.4rem 0.8rem;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      border: 1px solid var(--sage-light);
+    }
+    .tag-close {
+      cursor: pointer;
+      color: var(--muted);
+      font-weight: bold;
+      font-size: 1.1rem;
+      line-height: 1;
+    }
+    .tag-close:hover {
+      color: #ff4d4f;
+    }
 </style>
 </head>
 
@@ -1918,7 +1946,7 @@
 
         <div class="form-group">
           <label>Service Type</label>
-          <select id="bk-service" multiple style="height: auto; min-height: 120px;">
+          <select id="bk-service">
             <option value="">— Select a service —</option>
             <optgroup label="🤲 Massage Therapy">
               <option>Swedish Relaxation Massage</option>
@@ -1938,6 +1966,7 @@
             </optgroup>
             <option>Massage + Drink Combo</option>
           </select>
+          <div id="bk-service-tags" class="service-tags"></div>
         </div>
 
         <div class="form-row">
@@ -2001,9 +2030,7 @@
     function sendToWhatsApp() {
       const name = document.getElementById('bk-name').value.trim() || 'Not provided';
       const phone = document.getElementById('bk-phone').value.trim() || 'Not provided';
-      const serviceSelect = document.getElementById('bk-service');
-      const selectedOptions = Array.from(serviceSelect.selectedOptions).map(opt => opt.value || opt.text);
-      const service = selectedOptions.length > 0 ? selectedOptions.join(', ') : 'Not selected';
+      const service = selectedServices.length > 0 ? selectedServices.join(', ') : 'Not selected';
       const date = document.getElementById('bk-date').value || 'Not specified';
       const time = document.getElementById('bk-time').value || 'Not specified';
       const location = document.getElementById('bk-location').value.trim() || 'Not provided';
@@ -2061,6 +2088,38 @@
       nav.classList.remove('open');
       btn.classList.remove('open');
       document.body.style.overflow = '';
+    }
+  </script>
+
+  <script>
+    const selectedServices = [];
+
+    document.getElementById('bk-service').addEventListener('change', function(e) {
+      const val = e.target.value;
+      if (val && !selectedServices.includes(val)) {
+        selectedServices.push(val);
+        renderServiceTags();
+      }
+      e.target.value = ""; // Reset dropdown
+    });
+
+    function removeService(val) {
+      const index = selectedServices.indexOf(val);
+      if (index > -1) {
+        selectedServices.splice(index, 1);
+        renderServiceTags();
+      }
+    }
+
+    function renderServiceTags() {
+      const container = document.getElementById('bk-service-tags');
+      container.innerHTML = '';
+      selectedServices.forEach(srv => {
+        const tag = document.createElement('span');
+        tag.className = 'selected-tag';
+        tag.innerHTML = srv + ' <span class="tag-close" onclick="removeService(\'' + srv + '\')">&times;</span>';
+        container.appendChild(tag);
+      });
     }
   </script>
 </body>
